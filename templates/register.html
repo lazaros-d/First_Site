@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="el">
-<head>
-    <meta charset="UTF-8">
-    <title>Εγγραφή</title>
-</head>
+<html>
+<head><title>Εγγραφή</title></head>
 <body>
-    <h2>Φόρμα Εγγραφής</h2>
+    <h2>Δημιουργία Λογαριασμού</h2>
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
     <form method="POST">
-        Όνομα χρήστη: <input type="text" name="username" required><br><br>
-        Κωδικός: <input type="password" name="password" required><br><br>
-        <input type="submit" value="Εγγραφή">
+        Όνομα χρήστη: <input name="username" required><br>
+        Κωδικός: <input name="password" type="password" required><br>
+        <button type="submit">Εγγραφή</button>
     </form>
-    <p>Έχεις ήδη λογαριασμό; <a href="/login">Σύνδεση εδώ</a></p>
+    <p>Έχεις ήδη λογαριασμό; <a href="/login">Σύνδεση</a></p>
 </body>
 </html>

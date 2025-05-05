@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+    <h1>Καλώς ήρθες {{ username }}</h1>
+    {% if is_admin %}
+        <p>Είσαι admin</p>
+    {% endif %}
+    <a href="/logout">Αποσύνδεση</a>
+</body>
+</html>
