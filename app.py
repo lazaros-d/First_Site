@@ -26,7 +26,7 @@ def init_db():
                   
             CREATE TABLE subjects (
                 subject_name TEXT PRIMARY KEY UNIQUE NOT NULL,
-                subject_semester INTEGER
+                subject_semester INTEGER NOT NULL
             )
                   
         ''')
@@ -51,9 +51,9 @@ def create_superuser():
 def create_subjects():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.executemany("""
-              INSERT OR REPLACE INTO subjects (subject_name, subject_semester) VALUES (?, ?)
-            """, [
+    
+    insert_st = "INSERT OR IGNORE INTO subjects (subject_name, subject_semester) VALUES (%s, %s) "        
+    values = [
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΥΣ ΥΠΟΛΟΓΙΣΤΕΣ', '1'),
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΝ ΠΡΟΓΡΑΜΜΑΤΙΣΜΜΟ ΥΠΟΛΟΓΙΣΤΩΝ', '1'),
               ('ΜΑΘΗΜΑΤΙΚΗ ΑΝΑΛΥΣΗ 1', '1'),
@@ -127,8 +127,9 @@ def create_subjects():
               ('ΟΠΤΙΚΕΣ ΕΠΙΚΟΙΝΩΝΙΕΣ', '8'),
               ('ΣΧΕΔΙΑΣΗ ΕΝΣΩΜΑΤΩΜΕΝΩΝ ΣΥΣΤΗΜΑΤΩΝ ΜΕ VLSI 2', '8'),
               ('ΣΧΕΔΙΑΣΗ ΚΑΙ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΕΝΣΩΜΑΤΩΜΕΝΩΝ ΣΥΣΤΗΜΑΤΩΝ', '8')
-
-              ])
+              ]
+    c.executemany(insert_st, values)
+    c.execute("show tables")
     conn.commit()
     conn.close()
 
@@ -180,7 +181,7 @@ def subjects():
 
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute("SELECT subject_name FROM subjects")
+    c.execute("SELECT subject_name, subject_semester FROM subjects")
     subject_names = c.fetchall()
     conn.close()
 
