@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Μαθήματα</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-left: 5px solid #3498db;
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        p {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
+
+    {% if subjects_by_semester %}
+        {% for semester, subjects in subjects_by_semester.items() %}
+            <h2>Εξάμηνο {{ semester }}</h2>
+            <ul>
+                {% for subject in subjects %}
+                    <li>{{ subject }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
+    {% endif %}
+</body>
+</html>
