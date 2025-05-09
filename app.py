@@ -52,7 +52,7 @@ def create_subjects():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.executemany("""
-              INSERT OR UPDATE INTO subjects (subject_name, subject_semester) VALUES (?, ?)
+              INSERT OR REPLACE INTO subjects (subject_name, subject_semester) VALUES (?, ?)
             """, [
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΥΣ ΥΠΟΛΟΓΙΣΤΕΣ', '1'),
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΝ ΠΡΟΓΡΑΜΜΑΤΙΣΜΜΟ ΥΠΟΛΟΓΙΣΤΩΝ', '1'),
@@ -180,11 +180,11 @@ def subjects():
 
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute("SELECT * FROM subjects")
+    c.execute("SELECT subject_name FROM subjects")
     subject_names = c.fetchall()
     conn.close()
 
-    return render_template('subjects.html', σθβξεψτναμε=subject_names)
+    return render_template('subjects.html', subject_names=subject_names)
 
 @app.route('/logout')
 def logout():
