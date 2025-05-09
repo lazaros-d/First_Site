@@ -3,8 +3,12 @@
 <head><title>Μαθήματα</title></head>
 <body>
     <h1>Διάλεξε μάθημα για να βρεις θέματα</h1>
-        <p> {{ subject_name }}</p>
-        <a href="/subjects"></a>
-    </form>
+        <h2> DEIKSE TA SUBJECTS GAMW TO 8EO SOY</h2>
+        {% for subject in subjects %}  
+            <tr>
+                <td>{{ subject.subject_namme }}</td>
+                <td>{{ subject.subject_semester }}</td>
+            </tr>
+        {% endfor %}
 </body>
 </html>

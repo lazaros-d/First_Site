@@ -13,6 +13,7 @@ def init_db():
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         c.execute('''
+                  
             CREATE TABLE users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE NOT NULL,
@@ -20,10 +21,14 @@ def init_db():
                 admin INTEGER DEFAULT 0
             )
             
+        ''')
+        c.execute('''
+                  
             CREATE TABLE subjects (
-                  subject_name TEXT PRIMARY KEY UNIQUE NOT NULL
-                  subject_semester TEXT
-                  )
+                subject_name TEXT PRIMARY KEY UNIQUE NOT NULL,
+                subject_semester INTEGER
+            )
+                  
         ''')
         conn.commit()
         conn.close()
@@ -46,19 +51,18 @@ def create_superuser():
 def create_subjects():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute("""
-              INSERT OR UPDATE INTO subjects (subject_name, subject_semester)
-              VALUES 
-
+    c.executemany("""
+              INSERT OR UPDATE INTO subjects (subject_name, subject_semester) VALUES (?, ?)
+            """, [
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΥΣ ΥΠΟΛΟΓΙΣΤΕΣ', '1'),
               ('ΕΙΣΑΓΩΓΗ ΣΤΟΝ ΠΡΟΓΡΑΜΜΑΤΙΣΜΜΟ ΥΠΟΛΟΓΙΣΤΩΝ', '1'),
               ('ΜΑΘΗΜΑΤΙΚΗ ΑΝΑΛΥΣΗ 1', '1'),
               ('ΗΛΕΚΤΡΟΜΑΓΝΗΤΙΣΜΟΣ-ΦΥΣΙΚΗ', '1'),
               ('ΗΛΕΚΤΡΟΝΙΚΗ', '1'),
-              ('ΔΙΑΚΡΙΤΑ ΜΑΘΗΜΑΤΙΚΑ', '1')
+              ('ΔΙΑΚΡΙΤΑ ΜΑΘΗΜΑΤΙΚΑ', '1'),
 
               ('ΛΕΙΤΟΥΡΓΙΚΑ ΣΥΣΤΗΜΑΤΑ', '2'),
-              ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΑΦΗΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟς ΥΠΟΛΟΓΙΣΤΩΝ C++', '2')
+              ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΑΦΗΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟς ΥΠΟΛΟΓΙΣΤΩΝ C++', '2'),
               ('ΜΑΘΗΜΑΜΤΙΚΗ ΑΝΑΛΥΣΗ 2', '2'),
               ('ΓΡΑΜΜΙΚΗ ΑΛΓΕΒΡΑ', '2'),
               ('ΣΥΝΔΥΑΣΤΙΚΑ ΨΗΦΙΑΚΑ ΗΛΕΚΤΡΟΝΙΚΑ', '2'),
@@ -122,9 +126,9 @@ def create_subjects():
               ('ΣΧΕΔΙΑΣΗ ΨΗΦΙΑΚΩΝ ΠΑΙΧΝΙΔΙΩΝ ΚΑΙ ΠΑΙΧΝΙΔΟΠΟΙΗΣΗ', '8'),
               ('ΟΠΤΙΚΕΣ ΕΠΙΚΟΙΝΩΝΙΕΣ', '8'),
               ('ΣΧΕΔΙΑΣΗ ΕΝΣΩΜΑΤΩΜΕΝΩΝ ΣΥΣΤΗΜΑΤΩΝ ΜΕ VLSI 2', '8'),
-              ('ΣΧΕΔΙΑΣΗ ΚΑΙ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΕΝΣΩΜΑΤΩΜΕΝΩΝ ΣΥΣΤΗΜΑΤΩΝ', '8'),
+              ('ΣΧΕΔΙΑΣΗ ΚΑΙ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΕΝΣΩΜΑΤΩΜΕΝΩΝ ΣΥΣΤΗΜΑΤΩΝ', '8')
 
-              """)
+              ])
     conn.commit()
     conn.close()
 
@@ -174,16 +178,13 @@ def login():
 @app.route('/subjects', methods=['GET', 'POST'])
 def subjects():
 
-    if request.method == 'POST':
-        subject_name = request.form['subject_name']
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT * FROM subjects")
+    subject_names = c.fetchall()
+    conn.close()
 
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
-        c.execute("SELECT subject_name FROM subjects")
-        subject_name = c.fetchall()
-        conn.close()
-
-    return render_template('subjects.html', subject_name)
+    return render_template('subjects.html', σθβξεψτναμε=subject_names)
 
 @app.route('/logout')
 def logout():
