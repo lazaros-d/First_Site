@@ -25,8 +25,9 @@ def init_db():
         c.execute('''
                   
             CREATE TABLE subjects (
-                subject_name TEXT PRIMARY KEY UNIQUE NOT NULL,
-                subject_semester INTEGER NOT NULL
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                subject_name TEXT UNIQUE NOT NULL,
+                subject_semester TEXT
             )
                   
         ''')
@@ -68,28 +69,24 @@ def create_subjects():
         ('ΗΛΕΚΤΡΟΜΑΓΝΗΤΙΣΜΟΣ-ΦΥΣΙΚΗ', '1'),
         ('ΗΛΕΚΤΡΟΝΙΚΗ', '1'),
         ('ΔΙΑΚΡΙΤΑ ΜΑΘΗΜΑΤΙΚΑ', '1'),
-
         ('ΛΕΙΤΟΥΡΓΙΚΑ ΣΥΣΤΗΜΑΤΑ', '2'),
         ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΑΦΗΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟς ΥΠΟΛΟΓΙΣΤΩΝ C++', '2'),
         ('ΜΑΘΗΜΑΜΤΙΚΗ ΑΝΑΛΥΣΗ 2', '2'),
         ('ΓΡΑΜΜΙΚΗ ΑΛΓΕΒΡΑ', '2'),
         ('ΣΥΝΔΥΑΣΤΙΚΑ ΨΗΦΙΑΚΑ ΗΛΕΚΤΡΟΝΙΚΑ', '2'),
         ('ΑΓΓΛΙΚΑ ΟΡΟΛΟΓΙΑ ΠΛΗΡΟΦΟΡΙΚΗΣ 1', '2'),
-
         ('ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΤΟ ΔΙΑΔΥΚΤΥΟ', '3'),
         ('ΜΕΤΑΓΛΩΤΤΙΣΤΕΣ', '3'),
         ('ΑΡΙΘΜΗΤΙΚΗ ΑΝΑΛΥΣΗ', '3'),
         ('ΠΙΘΑΝΟΤΗΤΕΣ-ΣΤΑΤΙΣΤΙΚΗ', '3'),
         ('ΑΚΟΛΟΥΘΙΑΚΑ ΨΗΦΙΑΚΑ ΗΛΕΚΤΡΟΝΙΚΑ', '3'),
         ('ΑΓΓΛΙΚΑ ΟΡΟΛΟΓΙΑ ΠΛΗΡΟΦΟΡΙΚΗΣ 2', '3'),
-
         ('ΔΙΚΤΥΑ ΥΠΟΛΟΓΙΣΤΩΝ', '4'),
         ('ΒΑΣΕΙΣ ΔΕΔΟΜΕΝΩΝ', '4'),
         ('ΜΙΚΡΟΕΠΕΞΕΡΓΑΣΤΕΣ-ΜΙΚΡΟΕΛΕΓΚΤΕΣ 1', '4'),
         ('ΑΡΧΙΤΕΚΤΟΝΙΚΗ ΥΠΟΛΟΓΙΣΤΩΝ', '4'),
         ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΕΦΗΣ ΑΝΑΠΤΥΞΗ ΕΦΑΡΜΟΓΩΝ ΜΕ JAVA', '4'),
         ('ΔΟΜΕΣ ΔΕΔΟΜΕΝΩΝ', '4'),
-
         ('ΚΑΤΑΝΕΜΗΜΕΝΑ ΣΥΣΤΗΜΑΤΑ', '5'),
         ('ΑΛΓΟΡΙΘΜΟΙ ΚΑΙ ΠΟΛΥΠΛΟΚΟΤΗΤΑ', '5'),
         ('ΤΕΧΝΟΛΟΓΙΑ ΛΟΓΙΣΜΙΚΟΥ', '5'),
@@ -99,7 +96,6 @@ def create_subjects():
         ('ΤΕΧΝΟΛΟΓΙΑ ΠΟΛΥΜΕΣΩΝ', '5'),
         ('ΑΛΛΗΛΕΠΙΔΡΑΣΗ ΑΝΘΡΩΠΟΥ-ΜΗΧΑΝΗΣ', '5'),
         ('ΘΕΩΡΙΑ ΑΡΙΘΜΩΝ', '5'),
-
         ('ΑΣΦΑΛΕΙΑ ΥΠΟΛΟΓΙΣΤΗΚΩΝ ΣΥΣΤΗΜΑΤΩΝ', '6'),
         ('ΤΕΧΝΗΤΗ ΝΟΗΜΟΣΥΝΗ', '6'),
         ('ΤΗΛΕΠΙΚΟΙΝΩΝΙΕΣ', '6'),
@@ -111,7 +107,6 @@ def create_subjects():
         ('ΥΠΟΛΟΓΙΣΤΙΚΑ ΝΕΦΗ', '6'),
         ('ΘΕΜΑΤΑ ΑΡΙΘΜΗΤΙΚΗΣ ΑΝΑΛΥΣΗΣ', '6'),
         ('ΑΡΙΘΜΗΤΙΚΗ ΕΠΙΛΥΣΗ ΔΙΑΦΟΡΚΩΝ ΕΞΙΣΩΣΕΩΝ', '6'),
-
         ('ΕΡΕΥΝΗΤΙΚΗ ΜΕΘΟΔΟΛΟΓΙΑ ΚΑΙ ΔΕΟΝΤΟΛΟΓΙΑ', '7'),
         ('ΔΙΚΤΥΑ ΥΨΗΛΩΝ ΤΑΧΥΤΗΤΩΝ', '7'),
         ('ΠΡΟΧΩΡΗΜΕΝΑ ΘΕΜΜΑΤΑ ΒΑΣΕΩΝ ΔΕΔΟΜΕΝΩΝ', '7'),
@@ -123,7 +118,6 @@ def create_subjects():
         ('ΕΙΔΙΚΑ ΘΕΜΑΤΑ ΔΙΚΤΥΩΝ 2', '7'),
         ('ΑΣΦΑΛΕΙΑ ΔΙΚΤΥΩΝ', '7'),
         ('ΑΛΓΟΡΙΘΜΟΙ ΜΗΧΑΝΙΚΗΣ ΜΑΘΗΣΗΣ', '7'),
-
         ('ΨΗΦΙΑΚΗ ΕΠΕΞΕΡΓΑΣΙΑ ΣΗΜΑΤΟΣ', '8'),
         ('ΟΠΤΙΚΟΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ', '8'),
         ('ΜΙΚΡΟΕΠΕΞΕΡΓΑΣΤΕΣ-ΜΙΚΡΟΕΛΕΓΚΤΕΣ 2', '8'),
@@ -182,16 +176,20 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/subjects', methods=['GET', 'POST'])
+@app.route('/subjects')
 def subjects():
-
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("SELECT subject_name, subject_semester FROM subjects")
-    subject_names = c.fetchall()
+    rows = c.fetchall()
     conn.close()
 
-    return render_template('subjects.html', subject_names=subject_names)
+    subjects_by_semester = {}
+    for name, semester in rows:
+        subjects_by_semester.setdefault(semester, []).append(name)
+
+    return render_template('subjects.html', subjects_by_semester=subjects_by_semester)
+
 
 @app.route('/logout')
 def logout():
