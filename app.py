@@ -22,7 +22,6 @@ def init_db():
         ''')
         c.execute('''
             CREATE TABLE subjects (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 subject_name TEXT UNIQUE NOT NULL,
                 subject_semester TEXT
             )
