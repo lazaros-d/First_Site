@@ -3,18 +3,21 @@
 {% block title %}Μαθήματα{% endblock %}
 
 {% block content %}
-    <h1>Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
+  <h1>Λίστα Μαθημάτων</h1>
 
-    {% if subjects_by_semester %}
-        {% for semester, subjects in subjects_by_semester.items() %}
-            <h2>Εξάμηνο {{ semester }}</h2>
-            <ul>
-                {% for subject in subjects %}
-                    <li>{{ subject }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    {% else %}
-        <p>Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
-    {% endif %}
+  {% for semester, subjects in subjects_by_semester.items() %}
+    <h2>Εξάμηνο {{ semester }}</h2>
+    <ul>
+      {% for subject in subjects %}
+        <li>{{ subject }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+  <br>
+  <a href="{{ url_for('dashboard') }}">⬅ Επιστροφή στον Πίνακα Ελέγχου</a>
+{% endblock %}
+
+{% block extra %}
+  {% include 'components/chat_widget.html' %}
 {% endblock %}
