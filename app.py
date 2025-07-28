@@ -61,7 +61,7 @@ def create_subjects():
         ('ΗΛΕΚΤΡΟΝΙΚΗ', '1'),
         ('ΔΙΑΚΡΙΤΑ ΜΑΘΗΜΑΤΙΚΑ', '1'),
         ('ΛΕΙΤΟΥΡΓΙΚΑ ΣΥΣΤΗΜΑΤΑ', '2'),
-        ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΑΦΗΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟς ΥΠΟΛΟΓΙΣΤΩΝ C++', '2'),
+        ('ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΑΦΗΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΥΠΟΛΟΓΙΣΤΩΝ C++', '2'),
         ('ΜΑΘΗΜΑΜΤΙΚΗ ΑΝΑΛΥΣΗ 2', '2'),
         ('ΓΡΑΜΜΙΚΗ ΑΛΓΕΒΡΑ', '2'),
         ('ΣΥΝΔΥΑΣΤΙΚΑ ΨΗΦΙΑΚΑ ΗΛΕΚΤΡΟΝΙΚΑ', '2'),
@@ -180,6 +180,10 @@ def subjects():
 
     return render_template('subjects.html', subjects_by_semester=subjects_by_semester)
 
+@app.route('/single_subject')
+def single_subject():
+    pass
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -190,6 +194,7 @@ def dashboard():
     if 'username' not in session:
         return redirect(url_for('login'))
     return render_template('dashboard.html', username=session['username'], is_admin=session.get('admin', False))
+
 
 if __name__ == '__main__':
     init_db()

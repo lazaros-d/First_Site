@@ -39,18 +39,20 @@
 </head>
 <body>
     <h1>Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
-
+{% block content %}
+<section id="all-subjects"></section>
     {% if subjects_by_semester %}
         {% for semester, subjects in subjects_by_semester.items() %}
             <h2>Εξάμηνο {{ semester }}</h2>
             <ul>
                 {% for subject in subjects %}
-                    <li>{{ subject }}</li>
+                    <li><a href="/single_subject">{{ subject }}</a></li>
                 {% endfor %}
             </ul>
         {% endfor %}
     {% else %}
         <p>Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
     {% endif %}
+{% endblock %}
 </body>
 </html>
