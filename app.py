@@ -185,9 +185,20 @@ def subjects():
 def single_subject():
 
         subject = request.args.get('subject')
-        return render_template('single_subject.html', subject=subject)
-    
-        #return render_template('404.html')
+        
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute("SELECT subject_name FROM subjects")
+        rows = c.fetchall()
+        conn.close()
+        
+
+
+        for name in rows:
+            if name[0] == subject:
+                return render_template('single_subject.html', subject=subject)
+            
+        return render_template('404.html')
 
 @app.route('/logout')
 def logout():
