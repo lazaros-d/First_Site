@@ -14,7 +14,9 @@
             <h2>Εξάμηνο {{ semester }}</h2>
             <ul>
                 {% for subject in subjects %}
-                    <li><a href="/single_subject">{{ subject }}</a></li>
+                    
+                    <li><a href="{{ url_for('single_subject') }}?subject={{subject}}">{{ subject }}</a></li>
+                    
                 {% endfor %}
             </ul>
         {% endfor %}

@@ -168,6 +168,7 @@ def login():
 
 @app.route('/subjects')
 def subjects():
+        
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("SELECT subject_name, subject_semester FROM subjects")
@@ -178,11 +179,15 @@ def subjects():
     for name, semester in rows:
         subjects_by_semester.setdefault(semester, []).append(name)
 
-    return render_template('subjects.html', subjects_by_semester=subjects_by_semester)
+    return render_template('subjects.html', subjects_by_semester=subjects_by_semester, username=session['username'], is_admin=session.get('admin', False))
 
 @app.route('/single_subject')
 def single_subject():
-    pass
+
+        subject = request.args.get('subject')
+        return render_template('single_subject.html', subject=subject)
+    
+        #return render_template('404.html')
 
 @app.route('/logout')
 def logout():
