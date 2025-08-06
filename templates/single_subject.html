@@ -1,4 +1,5 @@
 <h1><a href="/subjects">Μαθήματα</a></h1>
 <h2>{{ subject }}</h2>
 
-<img src="/static/uploads/{{subject}}/{{subject}}.png" alt="{{subject}}" width="640" height="360">
+{% for image in images%}
+    <img src="/static/uploads/{{subject}}/{{image}}.png" alt="{{subject}}" width="640" height="360">

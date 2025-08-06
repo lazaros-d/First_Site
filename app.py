@@ -192,11 +192,11 @@ def single_subject():
         rows = c.fetchall()
         conn.close()
         
-
+        images = [] #Θα μπαίνουν τα ονόματα (λογικά "Α-Β-...-Ν θέμα", "_" "ποια εξεταστική", "_", "έτος εξεταστικής") από τις εικόνες που υπάρχουν μέσα στον φάκελο του μαθήματος (subject) 
 
         for name in rows:
             if name[0] == subject:
-                return render_template('single_subject.html', subject=subject)
+                return render_template('single_subject.html', subject=subject, images=images)
             
         return render_template('404.html')
 
