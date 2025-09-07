@@ -7,32 +7,44 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
+            background-color: #d1d5db; /* σκούρο γκρι */
         }
         .navbar {
             display: flex;
-            gap: 20px;
+            justify-content: space-between; /* αριστερά-δεξιά */
+            align-items: center;
             background-color: rgba(255,255,255,0.9);
-            padding: 12px 20px;
+            padding: 12px 40px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            gap: 20px;
         }
         .navbar a {
             text-decoration: none;
             color: #1e3a8a;
             font-weight: bold;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
     {% if session.get('username') %}
         <div class="navbar">
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('subjects') }}">Μαθήματα</a>
-            <a href="{{ url_for('logout') }}">Αποσύνδεση</a>
+            <div class="nav-left">
+                <a href="{{ url_for('dashboard') }}">Αρχική</a>
+                <a href="{{ url_for('subjects') }}">Μαθήματα</a>
+            </div>
+            <div class="nav-right">
+                <a href="{{ url_for('logout') }}">Αποσύνδεση</a>
+            </div>
         </div>
 
         {% include 'chat_widget.html' %}

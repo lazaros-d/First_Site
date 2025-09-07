@@ -2,10 +2,55 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div style="padding-top:80px; max-width:800px; margin:0 auto;">
-    <div style="background: rgba(255,255,255,0.9); padding:20px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-        <h1>Καλώς ήρθες, {{ username }}</h1>
-        <p>Εδώ θα εμφανίζεται γενική πληροφόρηση για τον χρήστη.</p>
+<div style="padding-top:80px;">
+
+    <!-- Hero Section with Background -->
+    <div style="
+        background: url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+        position: relative;
+    ">
+        <div style="background: rgba(0, 0, 0, 0.7); padding:40px; border-radius:16px; display:inline-block;">
+            <h1 style="margin:0; font-size:40px;">Καλώς ήρθες, {{ username }} 🎉</h1>
+            <p style="margin-top:10px; font-size:18px;">Ευχαριστούμε που επισκέφτηκες το site μας!</p>
+        </div>
+    </div>
+
+    <!-- Main Card -->
+    <div style="max-width:900px; margin:40px auto; background: white; padding:30px; border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,0.15); line-height:1.6;">
+        
+        <!-- About Project -->
+        <h2 style="color:#1e3a8a; margin-bottom:10px;">Σχετικά με το project</h2>
+        <p>
+            Το Project αυτό δημιουργήθηκε με σκοπό να προσφέρει ένα εύχρηστο περιβάλλον 
+            για φοιτητές. Θέλαμε να πάμε τις γνώσεις μας ένα βήμα παραπέρα και να 
+            εξάσκιθούμε.
+        </p>
+        <p>
+            Στόχος μας ήταν να διαυκολύνουμε τους φοιτητές από το να ψάχνουν υλικό
+            που έχει σταλεί σε ομαδικά chats, μιας και μιλαμε για εκατοντάδες 
+            φωτογραφίες από διάφορες χρονίες.
+        </p>
+
+        <!-- Team Section -->
+        <h2 style="color:#1e3a8a; margin:20px 0 10px;">Ποιοι είμαστε</h2>
+        <p>
+            Το project αναπτύχθηκε από δύο φοιτητές του τμήματος Πληροφορικής
+            στην Καστοριά.  
+            Και οι δύο συνέβαλαν με ιδέες, κώδικα και δημιουργικότητα.
+        </p>
+
+        <!-- Closing -->
+        <div style="margin-top:30px; padding:15px; background:#f9fafb; border-radius:12px; border:1px solid #e5e7eb;">
+            <p style="margin:0; font-size:15px; text-align:center; color:#374151;">
+                Το μόνο που ζητάμε σαν χάρη είναι να μας δείνετε feedback και να μας λέτε 
+                τι αλλαγές θα θέλατε να κάνουμε ή τι άλλο πιστεύετε ότι χρειάζεται το site.
+                Φυσικά να αναφέρετε και πιθανά bugs.
+                Μπορείτε να γράψετε στο chat ή να μας στείλετε στα προσωπικά μας e-mails.
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}
