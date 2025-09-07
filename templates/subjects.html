@@ -1,23 +1,17 @@
 {% extends 'base.html' %}
-
 {% block title %}Μαθήματα{% endblock %}
 
 {% block content %}
-  <h1>Λίστα Μαθημάτων</h1>
-
-  {% for semester, subjects in subjects_by_semester.items() %}
-    <h2>Εξάμηνο {{ semester }}</h2>
-    <ul>
-      {% for subject in subjects %}
-        <li>{{ subject }}</li>
-      {% endfor %}
-    </ul>
-  {% endfor %}
-
-  <br>
-  <a href="{{ url_for('dashboard') }}">⬅ Επιστροφή στον Πίνακα Ελέγχου</a>
-{% endblock %}
-
-{% block extra %}
-  {% include 'components/chat_widget.html' %}
+<div style="padding-top:80px; max-width:800px; margin:0 auto;">
+    {% for semester, subjects in subjects_by_semester.items() %}
+        <h2>Εξάμηνο {{ semester }}</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+            {% for subject_id, subject_name in subjects %}
+                <a href="{{ url_for('subject_detail', subject_id=subject_id) }}" style="padding:10px 14px; background-color:#2563eb; color:white; border-radius:6px; text-decoration:none; font-weight:bold;">
+                    {{ subject_name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

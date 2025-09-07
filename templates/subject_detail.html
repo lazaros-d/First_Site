@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ subject_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ subject_name }}</h1>
+
+<p>Εδώ θα εμφανίζεται το υλικό του μαθήματος: παλιά θέματα εξετάσεων, ασκήσεις, σημειώσεις κλπ.</p>
+
+<!-- Παράδειγμα εικόνων -->
+<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+    <!-- Κάθε εικόνα του μαθήματος -->
+    <img src="{{ url_for('static', filename='img/example1.jpg') }}" 
+         style="width: 250px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+    <img src="{{ url_for('static', filename='img/example2.jpg') }}" 
+         style="width: 250px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+    <!-- Μπορείς να προσθέσεις όσες εικόνες θέλεις -->
+</div>
+
+{% endblock %}
