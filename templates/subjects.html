@@ -2,16 +2,41 @@
 {% block title %}Μαθήματα{% endblock %}
 
 {% block content %}
-<div style="padding-top:80px; max-width:800px; margin:0 auto;">
-    {% for semester, subjects in subjects_by_semester.items() %}
-        <h2>Εξάμηνο {{ semester }}</h2>
-        <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
-            {% for subject_id, subject_name in subjects %}
-                <a href="{{ url_for('subject_detail', subject_id=subject_id) }}" style="padding:10px 14px; background-color:#2563eb; color:white; border-radius:6px; text-decoration:none; font-weight:bold;">
-                    {{ subject_name }}
-                </a>
-            {% endfor %}
-        </div>
-    {% endfor %}
+<div style="padding-top:80px; max-width:900px; margin:0 auto;">
+    <h1>Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
+
+    {% if subjects_by_semester %}
+        {% for semester, subjects in subjects_by_semester.items() %}
+            <div style="margin-bottom: 15px; background:#f0f0f0; padding:10px; border-radius:8px;">
+                <button class="semester-toggle" style="background:#2563eb; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer;">
+                    Εξάμηνο {{ semester }} ⬇
+                </button>
+                <ul class="subject-list" style="display:none; margin-top:10px; padding-left:20px;">
+                    {% for id_, subject in subjects %}
+                        <li>
+                            <a href="{{ url_for('subject_detail', subject_id=id_) }}">{{ subject }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
+    {% endif %}
 </div>
+
+<script>
+document.querySelectorAll('.semester-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+        const list = button.nextElementSibling;
+        if (list.style.display === 'none') {
+            list.style.display = 'block';
+            button.textContent = button.textContent.replace('⬇', '⬆');
+        } else {
+            list.style.display = 'none';
+            button.textContent = button.textContent.replace('⬆', '⬇');
+        }
+    });
+});
+</script>
 {% endblock %}
