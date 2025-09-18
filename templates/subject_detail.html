@@ -2,18 +2,18 @@
 {% block title %}{{ subject_name }}{% endblock %}
 
 {% block content %}
-<h1>{{ subject_name }}</h1>
+<div style="padding-top:80px; max-width:900px; margin:0 auto;">
+    <div style="background: rgba(255,255,255,0.9); padding:20px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+        <h1>{{ subject_name }}</h1>
 
-<p>Εδώ θα εμφανίζεται το υλικό του μαθήματος: παλιά θέματα εξετάσεων, ασκήσεις, σημειώσεις κλπ.</p>
-
-<!-- Παράδειγμα εικόνων -->
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
-    <!-- Κάθε εικόνα του μαθήματος -->
-    <img src="{{ url_for('static', filename='img/example1.jpg') }}" 
-         style="width: 250px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-    <img src="{{ url_for('static', filename='img/example2.jpg') }}" 
-         style="width: 250px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-    <!-- Μπορείς να προσθέσεις όσες εικόνες θέλεις -->
+        <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:15px;">
+            {% for item in materials %}
+                <div style="background:#f0f0f0; padding:10px; border-radius:8px; width:200px; text-align:center;">
+                    <img src="{{ url_for('static', filename='materials/' + item.image) }}" style="width:100%; border-radius:6px;">
+                    <p>{{ item.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
-
 {% endblock %}
