@@ -2,26 +2,29 @@
 {% block title %}Μαθήματα{% endblock %}
 
 {% block content %}
-<div style="padding-top:80px; max-width:900px; margin:0 auto;">
-    <h1>Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
+<div style="padding-top:80px; max-width:900px; margin:0 auto; color:#e5e7eb;">
+    <h1 style="text-align:center; margin-bottom:30px; color:#a78bfa;">Λίστα Μαθημάτων Ανά Εξάμηνο</h1>
 
     {% if subjects_by_semester %}
         {% for semester, subjects in subjects_by_semester.items() %}
-            <div style="margin-bottom: 15px; background:#f0f0f0; padding:10px; border-radius:8px;">
-                <button class="semester-toggle" style="background:#2563eb; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer;">
+            <div style="margin-bottom: 15px; background:#1f2937; padding:15px; border-radius:10px; border:1px solid #374151;">
+                <button class="semester-toggle" style="background:#4f46e5; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; transition:0.2s;">
                     Εξάμηνο {{ semester }} ⬇
                 </button>
-                <ul class="subject-list" style="display:none; margin-top:10px; padding-left:20px;">
+                <ul class="subject-list" style="display:none; margin-top:12px; padding-left:20px; list-style:none;">
                     {% for id_, subject in subjects %}
-                        <li>
-                            <a href="{{ url_for('subject_detail', subject_id=id_) }}">{{ subject }}</a>
+                        <li style="margin:8px 0;">
+                            <a href="{{ url_for('subject_detail', subject_id=id_) }}" 
+                               style="color:#34d399; text-decoration:none; font-size:16px; transition:0.2s;">
+                                {{ subject }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
         {% endfor %}
     {% else %}
-        <p>Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
+        <p style="text-align:center; color:#9ca3af;">Δεν υπάρχουν διαθέσιμα μαθήματα.</p>
     {% endif %}
 </div>
 

@@ -2,16 +2,19 @@
 {% block title %}{{ subject_name }}{% endblock %}
 
 {% block content %}
-<div style="padding-top:80px; max-width:900px; margin:0 auto;">
-    <div style="background: rgba(255,255,255,0.9); padding:20px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-        <h1>{{ subject_name }}</h1>
+<div style="padding-top:80px; max-width:900px; margin:0 auto; color:#e5e7eb;">
+    <div style="background:#1f2937; padding:25px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.3); border:1px solid #374151;">
+        <h1 style="margin:0; color:#a78bfa; text-align:center;">{{ subject_name }}</h1>
 
-        <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:15px;">
+        <div style="margin-top:25px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
             {% for item in materials %}
-                <div style="background:#f0f0f0; padding:10px; border-radius:8px; width:200px; text-align:center;">
-                    <img src="{{ url_for('static', filename='materials/' + item.image) }}" style="width:100%; border-radius:6px;">
-                    <p>{{ item.description }}</p>
+                <div style="background:#111827; padding:12px; border-radius:10px; width:200px; text-align:center; border:1px solid #374151; transition:transform 0.2s;">
+                    <img src="{{ url_for('static', filename='materials/' + item.image) }}" 
+                         style="width:100%; border-radius:6px; margin-bottom:10px;">
+                    <p style="color:#34d399; font-size:14px;">{{ item.description }}</p>
                 </div>
+            {% else %}
+                <p style="color:#9ca3af; text-align:center; width:100%;">Δεν έχει ανέβει ακόμα υλικό για αυτό το μάθημα.</p>
             {% endfor %}
         </div>
     </div>

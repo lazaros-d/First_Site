@@ -1,54 +1,122 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}My App{% endblock %}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Διασφαλίζει χώρο ανάμεσα στα links */
-            background-color: rgba(255,255,255,0.9);
-            padding: 12px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            box-sizing: border-box; /* Σιγουρεύει ότι το padding δεν κόβει τα links */
-        }
-        .navbar-left {
-            display: flex;
-            gap: 20px;
-        }
-        .navbar a {
-            text-decoration: none;
-            color: #1e3a8a;
-            font-weight: bold;
-            white-space: nowrap; /* Αποφυγή κοψίματος λέξεων */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Πανεπιστήμιο{% endblock %}</title>
+  <style>
+    /* Dark background */
+    body {
+      margin: 0;
+      font-family: "Fira Code", monospace, sans-serif;
+      background-color: #1e1e2e;
+      color: #e5e7eb;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: #2e2e3e;
+      color: #e5e7eb;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #a78bfa; /* Μωβ highlight */
+    }
+
+    /* Κεντρικό περιεχόμενο */
+    .container {
+      padding: 100px 20px 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Κάρτες */
+    .card {
+      background: #2e2e3e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Buttons */
+    .btn {
+      background-color: #34d399;
+      color: #1e1e2e;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #059669;
+    }
+
+    .btn-danger {
+      background-color: #a78bfa;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #8e0940ff;
+    }
+
+    /* Chat πάντα πάνω */
+    #chat-widget, #chat-toggle {
+      z-index: 2000 !important;
+    }
+  </style>
 </head>
 <body>
-    {% if session.get('username') and request.path not in ['/login', '/register'] %}
-        <div class="navbar">
-            <div class="navbar-left">
-                <a href="{{ url_for('dashboard') }}">Αρχική</a>
-                <a href="{{ url_for('subjects') }}">Μαθήματα</a>
-            </div>
-            <div>
-                <a href="{{ url_for('logout') }}">Αποσύνδεση</a>
-            </div>
-        </div>
+  {% if request.endpoint not in ['login', 'register'] %}
+  <nav>
+    <div>
+      <a href="{{ url_for('dashboard') }}">Αρχική</a>
+      <a href="{{ url_for('subjects') }}">Μαθήματα</a>
+    </div>
+    <div>
+      {% if session.get('username') %}
+        <span>{{ session['username'] }}</span>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Αποσύνδεση</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Σύνδεση</a>
+        <a href="{{ url_for('register') }}">Εγγραφή</a>
+      {% endif %}
+    </div>
+  </nav>
+  {% endif %}
 
-        {% include 'chat_widget.html' %}
-    {% endif %}
-
+  <div class="container">
     {% block content %}{% endblock %}
+  </div>
+
+  {% include 'chat_widget.html' %}
 </body>
 </html>
